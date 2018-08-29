@@ -1,0 +1,13 @@
+FROM edge-tracker-x64:base
+
+COPY opencv-3.4.2.tar /tmp/opencv-3.4.2.tar
+RUN tar -xvf /tmp/opencv-3.4.2.tar -C /tmp
+WORKDIR /tmp/opencv-3.4.2
+RUN mkdir build
+WORKDIR /tmp/opencv-3.4.2/build
+RUN cmake ..
+RUN make
+RUN make install
+
+# clean up
+RUN rm -rf /tmp/opencv-3.4.2.tar /tmp/opencv-3.4.2

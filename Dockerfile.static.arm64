@@ -1,0 +1,15 @@
+FROM arm64v8/ubuntu:16.04
+
+RUN apt-get -y update && apt-get install -y build-essential coreutils libavcodec-dev libavformat-dev libswscale-dev libavresample-dev libfftw3-dev libgoogle-glog-dev libjpeg-dev libpng16-dev libjasper-dev libtiff5-dev libwebp-dev
+
+# install edge-tracker
+COPY edge-tracker-0.1.0.tar.gz /tmp/edge-tracker-0.1.0.tar.gz
+WORKDIR /tmp
+RUN tar xzvf edge-tracker-0.1.0.tar.gz
+COPY edge-tracker-arm64 /tmp/edge-tracker/edge-tracker
+COPY export-arm64 /tmp/edge-tracker/export
+WORKDIR /tmp/edge-tracker
+RUN ./export 32 64 70 80 90 100
+
+# entrypoint
+#ENTRYPOINT ./edge-tracker

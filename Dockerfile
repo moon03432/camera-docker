@@ -1,0 +1,19 @@
+FROM edge-tracker:opencv
+
+RUN apt-get -y update && apt-get install -y libopenblas-dev libgoogle-glog-dev
+WORKDIR /tmp
+# install cpptoml (header)
+COPY cpptoml.h /usr/local/include/
+# install eigen (header)
+COPY eigen-3.3.4.tar.gz /tmp/eigen-3.3.4.tar.gz
+RUN tar xzvf eigen-3.3.4.tar.gz
+RUN mv Eigen /usr/local/include/
+# install dlib
+COPY dlib-19.15.tar.gz /tmp/dlib-19.15.tar.gz
+RUN tar xzvf dlib-19.15.tar.gz
+# install edge-tracker
+COPY edge-tracker-0.1.0.tar.gz /tmp/edge-tracker-0.1.0.tar.gz
+RUN tar xzvf edge-tracker-0.1.0.tar.gz
+WORKDIR /tmp/edge-tracker/build
+RUN cmake ..
+RUN make
