@@ -1,8 +1,6 @@
 FROM arm64v8/ubuntu:16.04
 
-RUN apt-get -y update && apt-get install -y build-essential coreutils libavcodec-dev libavformat-dev libswscale-dev libavresample-dev libfftw3-dev libgoogle-glog-dev libjpeg-dev libpng16-dev libjasper-dev libtiff5-dev libwebp-dev
-
-RUN apt-get install -y pkg-config cmake libglib2.0-dev
+RUN apt-get -y update && apt-get install -y build-essential coreutils pkg-config cmake libglib2.0-dev libavcodec-dev libavformat-dev libswscale-dev libavresample-dev libfftw3-dev libgoogle-glog-dev libjpeg-dev libpng16-dev libjasper-dev libtiff5-dev libwebp-dev
 
 WORKDIR /tmp
 
@@ -15,28 +13,28 @@ RUN mv Eigen /usr/include/aarch64-linux-gnu/
 COPY cpptoml.h /usr/include/aarch64-linux-gnu/
 
 # install dlib
-COPY dlib-19.15-arm64.tar.gz /tmp/
+COPY arm64/dlib-19.15-arm64.tar.gz /tmp/
 RUN tar xzvf dlib-19.15-arm64.tar.gz
 RUN mv dlib/include/dlib /usr/include/aarch64-linux-gnu/
 RUN mv dlib/lib/libdlib.a /usr/lib/aarch64-linux-gnu/
 RUN mv dlib/dlib.pc /usr/lib/aarch64-linux-gnu/pkgconfig/
 
 # install ncnn
-COPY ncnn-arm64.tar.gz /tmp/
+COPY arm64/ncnn-arm64.tar.gz /tmp/
 RUN tar xzvf ncnn-arm64.tar.gz
 RUN mv ncnn/include/ncnn /usr/include/aarch64-linux-gnu/
 RUN mv ncnn/lib/libncnn.a /usr/lib/aarch64-linux-gnu/
 RUN mv ncnn/ncnn.pc /usr/lib/aarch64-linux-gnu/pkgconfig/
 
 # install tracker KCF
-COPY tracker-kcf-arm64.tar.gz /tmp/
+COPY arm64/tracker-kcf-arm64.tar.gz /tmp/
 RUN tar xzvf tracker-kcf-arm64.tar.gz
 RUN mv tracker-kcf/include/tracker /usr/include/aarch64-linux-gnu/
 RUN mv tracker-kcf/lib/libtrackerKCF.a /usr/lib/aarch64-linux-gnu/
 RUN mv tracker-kcf/tracker-kcf.pc /usr/lib/aarch64-linux-gnu/pkgconfig/
 
 # install opencv
-COPY opencv-3.4.2-arm64.tar.gz /tmp/
+COPY arm64/opencv-3.4.2-arm64.tar.gz /tmp/
 RUN tar xzvf opencv-3.4.2-arm64.tar.gz
 RUN mv opencv/include/* /usr/include/
 RUN mv opencv/lib/* /usr/lib/
@@ -57,4 +55,4 @@ RUN bin/export 32 64 70 80 90 100
 COPY shape_predictor_68_face_landmarks.dat /tmp/edge-tracker-0.1.2
 
 # entrypoint
-ENTRYPOINT bin/main
+#ENTRYPOINT bin/main
