@@ -45,21 +45,17 @@ RUN mv opencv/share/OpenCV /usr/share/
 RUN mv opencv/opencv.pc /usr/lib/aarch64-linux-gnu/pkgconfig/
 
 # install edge-tracker
-#COPY edge-tracker-0.1.2.tar.gz /tmp/
-#RUN tar xzvf edge-tracker-0.1.2.tar.gz
-#RUN mkdir -p /tmp/edge-tracker-0.1.2/build
-#WORKDIR /tmp/edge-tracker-0.1.2/build
-#RUN cmake ..
-#RUN make
-#WORKDIR /tmp/edge-tracker-0.1.2
-#RUN bin/export 32 64 70 80 90 100
-
-RUN mkdir -p /tmp/edge-tracker
-COPY arm64/edge-tracker /tmp/edge-tracker/
-COPY arm64/wisdom /tmp/edge-tracker/
+COPY edge-tracker-0.1.3.tar.gz /tmp/
+RUN tar xzvf edge-tracker-0.1.3.tar.gz
+RUN mkdir -p /tmp/edge-tracker-0.1.3/build
+WORKDIR /tmp/edge-tracker-0.1.3/build
+RUN cmake ..
+RUN make
+WORKDIR /tmp/edge-tracker-0.1.3
+RUN bin/export 32 64 70 80 90 100
 
 # copy dlib face model
-COPY shape_predictor_68_face_landmarks.dat /tmp/edge-tracker
+COPY shape_predictor_68_face_landmarks.dat /tmp/edge-tracker-0.1.3
 
 # entrypoint
 #ENTRYPOINT bin/main
